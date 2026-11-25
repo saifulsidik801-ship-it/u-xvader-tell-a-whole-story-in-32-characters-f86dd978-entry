@@ -22,6 +22,11 @@ def main() -> None:
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(ENTRY)  # no trailing newline: the 32-char cap is hard
+    # Read it back and verify what actually landed on disk matches.
+    with open("/output/entry.txt", encoding="utf-8") as f:
+        written = f.read()
+    assert written == ENTRY, f"wrote {written!r}, expected {ENTRY!r}"
+    print(f"entry.txt: {written!r} ({len(written)} chars)")
 
 
 if __name__ == "__main__":
